@@ -1,17 +1,71 @@
+<!DOCTYPE html>
 <html>
-    <head>
-      <title>My Form</title>
-    </head>
-    <body>
-      <form action="/submit" method="POST">
-        <label for="input-field">Input Field:</label>
-        <input type="text" name="name">
-        <button type="submit">Submit</button>
-      </form>
-      <form action="/delete-users" method="POST">
-        <button type="submit">Delete All Users</button>
-      </form>
-      <a href="/users">Users</a>
-    </body>
-  </html>
+  <head>
+    <title>My Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
 
+      form {
+        margin: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      button[type="submit"] {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+
+      a {
+        display: block;
+        margin-top: 20px;
+        color: #4CAF50;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/submit" method="POST">
+      <label for="input-field">Input Field:</label>
+      <input type="text" name="name">
+      <button type="submit">Submit</button>
+    </form>
+    <form action="/delete-users" method="POST">
+      <button type="submit">Delete All Users</button>
+    </form>
+    <a href="/users">Users</a>
+  </body>
+</html>
