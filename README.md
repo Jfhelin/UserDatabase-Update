@@ -1,3 +1,3 @@
 # FreeSoftware
-Verifying Open source libraries, 
+Verifying Open source libraries,  
 Static code analysis verification turned on.
