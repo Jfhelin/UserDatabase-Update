@@ -1,4 +1,4 @@
-const express = require('express'); 
+const express = require('express');
 const app = express();
 const port = 3000;
 const sqlite3 = require('sqlite3').verbose();
@@ -16,6 +16,12 @@ db.run('CREATE TABLE IF NOT EXISTS users (name TEXT)');
 
 // serve static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+// helper function to send files
+function sendFileHelper(res, fileName) {
+  res.sendFile(fileName, { root: __dirname });
+}
+
 
 // handle form submission
 app.post('/submit', urlencodedParser, (req, res) => {
@@ -56,7 +62,7 @@ app.post('/delete-users', (req, res) => {
 
 // display form
 app.get('/', (req, res) => {
-  res.sendFile('form.html', { root: __dirname });
+  sendFileHelper(res, 'form.html');
 });
 
 app.listen(port, () => {
