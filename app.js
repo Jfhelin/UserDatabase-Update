@@ -48,21 +48,6 @@ app.get('/users', (req, res) => {
   });
 });
 
-// get details on a specific user
-app.get('/users/:id', (req, res) => {
-  const id = req.params.id;
-  db.get(`SELECT * FROM users WHERE id = ${id}`, (err, row) => {
-    if (err) {
-      console.error(err.message);
-      res.status(500).send('Internal server error');
-    } else if (!row) {
-      res.status(404).send('User not found');
-    } else {
-      res.send(row);
-    }
-  });
-});
-
 function getUserById(id, callback) {
   db.get(`SELECT * FROM users WHERE id = ${id}`, (err, row) => {
     if (err) {
@@ -76,7 +61,7 @@ function getUserById(id, callback) {
   });
 }
 
-app.get('/username/:id', (req, res) => {
+app.get('/user/:id', (req, res) => {
   const id = req.params.id;
   getUserById(id, (err, row) => {
     if (err) {
