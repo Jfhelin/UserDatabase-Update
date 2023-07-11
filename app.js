@@ -22,6 +22,16 @@ function sendFileHelper(res, fileName) {
   res.sendFile(fileName, { root: __dirname });
 }
 
+function getUsersFromDB(callback) {
+  db.all('SELECT * FROM users', (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      callback(err, null);
+    } else {
+      callback(null, rows);
+    }
+  });
+}
 
 // handle form submission
 app.post('/submit', urlencodedParser, (req, res) => {
@@ -36,11 +46,9 @@ app.post('/submit', urlencodedParser, (req, res) => {
   });
 });
 
-// return all users
 app.get('/users', (req, res) => {
-  db.all('SELECT * FROM users', (err, rows) => {
+  getUsersFromDB((err, rows) => {
     if (err) {
-      console.error(err.message);
       res.status(500).send('Internal server error');
     } else {
       res.send(rows);
