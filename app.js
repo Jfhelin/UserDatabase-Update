@@ -22,16 +22,6 @@ function sendFileHelper(res, fileName) {
   res.sendFile(fileName, { root: __dirname });
 }
 
-function getUsersFromDB(callback) {
-  db.all('SELECT * FROM users', (err, rows) => {
-    if (err) {
-      console.error(err.message);
-      callback(err, null);
-    } else {
-      callback(null, rows);
-    }
-  });
-}
 
 // handle form submission
 app.post('/submit', urlencodedParser, (req, res) => {
@@ -46,15 +36,59 @@ app.post('/submit', urlencodedParser, (req, res) => {
   });
 });
 
+// return all users
 app.get('/users', (req, res) => {
-  getUsersFromDB((err, rows) => {
+  db.all('SELECT * FROM users', (err, rows) => {
     if (err) {
+      console.error(err.message);
       res.status(500).send('Internal server error');
     } else {
       res.send(rows);
     }
   });
 });
+
+// get details on a specific user
+app.get('/users/:id', (req, res) => {
+  const id = req.params.id;
+  db.get(`SELECT * FROM users WHERE id = ${id}`, (err, row) => {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Internal server error');
+    } else if (!row) {
+      res.status(404).send('User not found');
+    } else {
+      res.send(row);
+    }
+  });
+});
+
+function getUserById(id, callback) {
+  db.get(`SELECT * FROM users WHERE id = ${id}`, (err, row) => {
+    if (err) {
+      console.error(err.message);
+      callback(err, null);
+    } else if (!row) {
+      callback(null, null);
+    } else {
+      callback(null, row);
+    }
+  });
+}
+
+app.get('/username/:id', (req, res) => {
+  const id = req.params.id;
+  getUserById(id, (err, row) => {
+    if (err) {
+      res.status(500).send('Internal server error');
+    } else if (!row) {
+      res.status(404).send('User not found');
+    } else {
+      res.send(row);
+    }
+  });
+});
+
 
 // delete all users
 app.post('/delete-users', (req, res) => {
